@@ -4,6 +4,10 @@
 (function () {
   "use strict";
 
+  var root = document.documentElement;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduceMotion) root.classList.add("has-motion");
+
   var projects = {
     voise: {
       title: "Church in Voise",
@@ -28,7 +32,7 @@
         ["Area", "210 m²"],
         ["Structure", "Concrete, spruce"],
         ["Status", "Completed 2022"],
-        ["Photography", "Studio Halden"]
+        ["Drawing", "Studio Halden"]
       ]
     },
     atelier: {
@@ -144,11 +148,16 @@
 
   function closeProject() {
     if (!dialog) return;
-    if (typeof dialog.close === "function") {
-      dialog.close();
-    } else {
-      dialog.removeAttribute("open");
+    if (reduceMotion || !dialog.open || typeof dialog.close !== "function") {
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+      return;
     }
+    dialog.classList.add("is-closing");
+    window.setTimeout(function () {
+      dialog.classList.remove("is-closing");
+      dialog.close();
+    }, 200);
   }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-project]"), function (button) {
@@ -185,8 +194,10 @@
 
       previewPlate.className = "plate " + project.plate;
       previewLabel.textContent = project.title;
-      preview.style.left = event.clientX + "px";
-      preview.style.top = event.clientY + "px";
+      var previewX = Math.min(window.innerWidth - 130, Math.max(130, event.clientX));
+      var previewY = Math.min(window.innerHeight - 90, Math.max(90, event.clientY));
+      preview.style.left = previewX + "px";
+      preview.style.top = previewY + "px";
       preview.classList.add("show");
     });
 
@@ -197,6 +208,92 @@
     });
 
     window.addEventListener("scroll", function () { preview.classList.remove("show"); }, { passive: true });
+  }
+
+  /* ---------- Motion layer ---------- */
+
+  var motionReady = root.classList.contains("has-motion") && "IntersectionObserver" in window;
+
+  function revealAll(selector, stagger) {
+    var nodes = Array.prototype.slice.call(document.querySelectorAll(selector));
+    if (!nodes.length) return;
+    if (!motionReady) {
+      nodes.forEach(function (node) { node.classList.add("is-in"); });
+      return;
+    }
+    nodes.forEach(function (node, index) {
+      node.classList.add("will-reveal");
+      node.style.setProperty("--reveal-i", String(index % (stagger || 6)));
+    });
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px" });
+    nodes.forEach(function (node) { observer.observe(node); });
+  }
+
+  revealAll(".hero-copy > *, .hero-art, .section-head, .work-row, .studio-art, .studio-copy > *, .steps li, .contact > *, .foot > *", 6);
+
+  if (motionReady) {
+    var rail = document.createElement("div");
+    rail.className = "drafting-rail";
+    rail.setAttribute("aria-hidden", "true");
+    rail.innerHTML = "<span></span>";
+    document.body.appendChild(rail);
+
+    var railBar = rail.firstChild;
+    var railTicking = false;
+    function updateRail() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      rail.style.setProperty("--rail", ratio.toFixed(4));
+      railBar.style.transform = "scaleY(" + ratio.toFixed(4) + ")";
+      railTicking = false;
+    }
+    function requestRail() {
+      if (railTicking) return;
+      railTicking = true;
+      window.requestAnimationFrame(updateRail);
+    }
+    updateRail();
+    window.addEventListener("scroll", requestRail, { passive: true });
+    window.addEventListener("resize", requestRail);
+
+    var heroArt = document.querySelector(".hero-art .plate");
+    if (heroArt) {
+      heroArt.addEventListener("pointermove", function (event) {
+        var rect = heroArt.getBoundingClientRect();
+        var x = (event.clientX - rect.left) / rect.width - 0.5;
+        var y = (event.clientY - rect.top) / rect.height - 0.5;
+        heroArt.style.setProperty("--tilt-y", (x * 4).toFixed(2) + "deg");
+        heroArt.style.setProperty("--tilt-x", (-y * 4).toFixed(2) + "deg");
+      });
+      heroArt.addEventListener("pointerleave", function () {
+        heroArt.style.setProperty("--tilt-y", "0deg");
+        heroArt.style.setProperty("--tilt-x", "0deg");
+      });
+    }
+
+    if (menuBtn && nav) {
+      menuBtn.addEventListener("click", function () {
+        if (!nav.classList.contains("is-open")) return;
+        nav.animate(
+          [{ opacity: 0, transform: "translateY(-6px)" }, { opacity: 1, transform: "none" }],
+          { duration: 220, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+        );
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape" || !nav.classList.contains("is-open")) return;
+        nav.classList.remove("is-open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.querySelector(".sr").textContent = "Open menu";
+        menuBtn.focus();
+      });
+    }
+
   }
 
   /* Each GitHub Pages deploy is a standalone sample, so there is no gallery to return to. */

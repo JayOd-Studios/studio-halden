@@ -53,6 +53,14 @@ restrained editorial layout, an index that stays legible on a phone, a native
 on touch and under reduced motion, and artwork that does not pretend to be a
 rendering.
 
+## Motion
+
+The motion layer is dependency-free. A drafting rail tracks scroll progress,
+the hero illustration draws in and tilts toward the pointer, the work index and
+studio sections reveal in sequence, work rows shift on hover, and the project
+sheet animates in and out of its native `<dialog>`. The layer is skipped under
+`prefers-reduced-motion`; the page stays fully readable without it.
+
 ## Make it yours
 
 - Projects: add an object to `projects` in `main.js` with `title`, `meta`, `copy`, `plate` (`p1`–`p6`) and `facts`; then add a matching `<button data-project="id">` row.
