@@ -1,11 +1,11 @@
 /* Studio Halden — sample architecture portfolio.
-   Bone paper, ink type, drawn facades. No webfonts, no photography. */
+   Bone paper, ink type, photography. No webfonts. */
 
 :root {
   --bone: #edeadf;
   --bone-2: #e3dfd1;
   --ink: #15150f;
-  --muted: #6c6a5e;
+  --muted: #5c5a4e;
   --line: #cdc7b7;
   --accent: #3f4436;
   --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -104,109 +104,24 @@ button { font: inherit; color: inherit; }
 .head nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
 .menu-btn { display: none; }
 
-/* ---------- Plates: drawn architecture ---------- */
+/* ---------- Plates: photography ---------- */
 
 .plate {
   position: relative;
   overflow: hidden;
   background: var(--bone-2);
 }
+.plate img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .plate::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(200deg, rgba(255, 255, 255, 0.16), transparent 45%);
-}
-
-.p1 {
-  background:
-    linear-gradient(90deg, transparent 0 8%, rgba(30, 32, 27, 0.14) 8% 10%, transparent 10% 24%, rgba(30, 32, 27, 0.12) 24% 26%, transparent 26% 40%, rgba(30, 32, 27, 0.16) 40% 42%, transparent 42% 100%),
-    linear-gradient(180deg, #d8d4c6 0 54%, #c3beac 54% 100%);
-}
-.p1::before {
-  content: "";
-  position: absolute;
-  left: 12%; bottom: 0;
-  width: 34%; height: 48%;
-  border-radius: 50% 50% 0 0 / 62% 62% 0 0;
-  background: #3d4238;
-  box-shadow: 0 0 0 1px rgba(20, 20, 15, 0.16) inset;
-}
-
-.p2 {
-  background:
-    linear-gradient(180deg, #dcd8ca 0 46%, #c7c2b1 46% 100%);
-}
-.p2::before {
-  content: "";
-  position: absolute;
-  left: 18%; right: 18%; bottom: 22%;
-  height: 34%;
-  background: linear-gradient(180deg, #4c5245 0 18%, #8f9585 18% 20%, #6d7464 20% 46%, #d6d2c2 46% 50%, #5d6455 50% 100%);
-  box-shadow: 0 22px 28px rgba(30, 32, 26, 0.18);
-}
-
-.p3 {
-  background:
-    repeating-linear-gradient(90deg, rgba(30, 32, 26, 0.16) 0 1px, transparent 1px 7.2%),
-    repeating-linear-gradient(180deg, rgba(30, 32, 26, 0.12) 0 1px, transparent 1px 12%),
-    linear-gradient(160deg, #cfd2c5, #b6b9a9);
-}
-.p3::before {
-  content: "";
-  position: absolute;
-  inset: 14% 12% 20% 12%;
-  border: 1px solid rgba(28, 30, 24, 0.3);
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 248, 226, 0.34) 40.4% 62%, transparent 62.4%);
-}
-
-.p4 {
-  background:
-    radial-gradient(60% 70% at 72% 22%, #f6efd9 0 24%, transparent 25%),
-    linear-gradient(120deg, #dad6c8 0 58%, #c8c3b2 58% 100%);
-}
-.p4::before {
-  content: "";
-  position: absolute;
-  left: 58%; top: 12%; bottom: 18%;
-  width: 22%;
-  background: linear-gradient(180deg, #f4eeda, #e9e2cc);
-  box-shadow: -14px 10px 26px rgba(40, 40, 32, 0.14);
-}
-.p4::after {
-  content: "";
-  position: absolute;
-  left: 18%; bottom: 18%;
-  width: 26%; height: 7%;
-  background: #7c715c;
-  box-shadow: 74px 0 0 #7c715c;
-  border-radius: 1px;
-}
-
-.p5 {
-  background:
-    linear-gradient(180deg, #d5d8cc 0 42%, #aeb3a3 42% 48%, #969c8c 48% 100%);
-}
-.p5::before {
-  content: "";
-  position: absolute;
-  left: 14%; right: 14%; top: 38%;
-  height: 26%;
-  background:
-    repeating-linear-gradient(90deg, #e7e3d3 0 4.5%, transparent 4.5% 9%),
-    linear-gradient(180deg, #5a6152, #454b3f);
-}
-
-.p6 {
-  background:
-    linear-gradient(180deg, #dcd8c9 0 26%, #c6c1b0 26% 100%);
-}
-.p6::before {
-  content: "";
-  position: absolute;
-  left: 22%; right: 22%; top: 12%; bottom: 8%;
-  background:
-    repeating-linear-gradient(180deg, #6a7161 0 2px, #8d9382 2px 12px, transparent 12px 15px),
-    linear-gradient(90deg, #5c6353, #79806e);
+  background: linear-gradient(200deg, rgba(255, 255, 255, 0.08), transparent 40%);
+  pointer-events: none;
 }
 
 /* ---------- Hero ---------- */

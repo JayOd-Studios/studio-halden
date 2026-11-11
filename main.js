@@ -13,7 +13,8 @@
       title: "Church in Voise",
       meta: "Cultural · Voise, Norway · 2019",
       copy: "A 12th-century nave had been repaired so often that its walls had stopped agreeing with each other. We kept the stone, replaced the roof and put a single arched opening where the old porch had been, so the light arrives at the same hour it used to.",
-      plate: "p1",
+      img: "assets/halden-voise.webp",
+      alt: "A close view of a pale brick church facade with tall vertical windows and a circular window.",
       facts: [
         ["Client", "Voise parish"],
         ["Area", "420 m²"],
@@ -26,7 +27,8 @@
       title: "House on the Hill",
       meta: "Residential · Ålesund, Norway · 2022",
       copy: "A house for two people and a lot of weather. Two concrete slabs hold a timber box above the ground, so the slope stays visible beneath the living room and the roof becomes a terrace.",
-      plate: "p2",
+      img: "assets/halden-hill.webp",
+      alt: "A modern house with wide glass walls and a flat roof, standing in snow.",
       facts: [
         ["Client", "Private"],
         ["Area", "210 m²"],
@@ -39,7 +41,8 @@
       title: "Atelier Nord",
       meta: "Workspace · Oslo, Norway · 2024",
       copy: "A print workshop in a former garage. Everything that could be reused was: the slab, the steel frame, and the north wall, which gives the presses the flat light they need. New work is limited to a single glazed screen.",
-      plate: "p3",
+      img: "assets/halden-atelier.webp",
+      alt: "An architecture studio wall pinned with drawings above a white model.",
       facts: [
         ["Client", "Nord Studio"],
         ["Area", "860 m²"],
@@ -52,7 +55,8 @@
       title: "Library at Eid",
       meta: "Public · Eid, Norway · 2021",
       copy: "A library that had to fit between two existing walls, with a school on one side and a square on the other. The plan is one long reading room, and a stair that doubles as the auditorium.",
-      plate: "p5",
+      img: "assets/halden-library.webp",
+      alt: "A tall library interior lined with pale timber slats and shelves.",
       facts: [
         ["Client", "Eid municipality"],
         ["Area", "1,450 m²"],
@@ -65,7 +69,8 @@
       title: "Pavilion for a Fjord",
       meta: "Installation · Geiranger, Norway · 2023",
       copy: "A summer pavilion built in four days with a local carpentry class. Twelve spruce frames, no fixings below the high-water line, and a bench on the side that stays dry.",
-      plate: "p4",
+      img: "assets/halden-pavilion.webp",
+      alt: "A small red timber cabin beside a blue fjord below steep green mountains.",
       facts: [
         ["Client", "Geiranger festival"],
         ["Area", "60 m²"],
@@ -78,7 +83,8 @@
       title: "Halden Tower",
       meta: "Adaptive reuse · Oslo, Norway · 2026",
       copy: "A 1962 office tower kept rather than demolished. The concrete frame stays; the facade becomes a deep timber loggia, and the ground floor is opened to the street for the first time.",
-      plate: "p6",
+      img: "assets/halden-tower.webp",
+      alt: "A tall concrete tower with geometric openings and weathering, seen against a pale sky.",
       facts: [
         ["Client", "Halden Eiendom"],
         ["Area", "3,200 m²"],
@@ -111,7 +117,7 @@
   /* ---------- Project dialog ---------- */
 
   var dialog = document.getElementById("projectDialog");
-  var dlgPlate = document.getElementById("dlgPlate");
+  var dlgImg = document.getElementById("dlgImg");
   var dlgMeta = document.getElementById("dlgMeta");
   var dlgTitle = document.getElementById("dlgTitle");
   var dlgCopy = document.getElementById("dlgCopy");
@@ -122,7 +128,10 @@
     var project = projects[id];
     if (!project || !dialog) return;
 
-    dlgPlate.className = "plate " + project.plate;
+    if (dlgImg) {
+      dlgImg.src = project.img;
+      dlgImg.alt = "";
+    }
     dlgMeta.textContent = project.meta;
     dlgTitle.textContent = project.title;
     dlgCopy.textContent = project.copy;
@@ -176,12 +185,12 @@
   /* ---------- Hover preview ---------- */
 
   var preview = document.getElementById("hoverPreview");
-  var previewPlate = document.getElementById("hoverPlate");
+  var previewImg = document.getElementById("hoverImg");
   var previewLabel = document.getElementById("hoverLabel");
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (preview && previewPlate && finePointer && !reduced) {
+  if (preview && previewImg && finePointer && !reduced) {
     document.addEventListener("pointermove", function (event) {
       var row = event.target.closest(".work-row");
       if (!row) {
@@ -192,7 +201,7 @@
       var project = projects[row.getAttribute("data-project")];
       if (!project) return;
 
-      previewPlate.className = "plate " + project.plate;
+      previewImg.src = project.img;
       previewLabel.textContent = project.title;
       var previewX = Math.min(window.innerWidth - 130, Math.max(130, event.clientX));
       var previewY = Math.min(window.innerHeight - 90, Math.max(90, event.clientY));

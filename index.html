@@ -46,8 +46,8 @@
     </div>
 
     <figure class="hero-art">
-      <div class="plate p1" role="img" aria-label="A drawn concrete facade: tall vertical fins and one arched opening."></div>
-      <figcaption>Church in Voise, 2019. Illustration by the studio.</figcaption>
+      <div class="plate"><img src="assets/halden-hero.webp" alt="A modern church with pale angular walls and a tall slender spire against a blue sky." width="1200" height="1500" fetchpriority="high" decoding="async"></div>
+      <figcaption>Church in Voise, 2019. Reference photograph by Truls Brubakken.</figcaption>
     </figure>
   </section>
 
@@ -121,8 +121,8 @@
 
   <section class="studio" id="studio" aria-labelledby="studioTitle">
     <figure class="studio-art">
-      <div class="plate p4" role="img" aria-label="A drawn interior: a pale wall, a tall window and a bench in morning light."></div>
-      <figcaption>Atelier Nord, Oslo. Morning, east light.</figcaption>
+      <div class="plate"><img src="assets/halden-studio.webp" alt="Hands assembling an architectural model on a desk covered with plans." width="1200" height="900" loading="lazy" decoding="async"></div>
+      <figcaption>Atelier Nord, Oslo. Model study by Ron Lach.</figcaption>
     </figure>
 
     <div class="studio-copy">
@@ -212,19 +212,19 @@
 
 <!-- Hover preview: a desktop nicety, hidden from assistive tech and touch. -->
 <div class="hover-preview" id="hoverPreview" aria-hidden="true">
-  <div class="plate p1" id="hoverPlate"></div>
+  <div class="plate" id="hoverPlate"><img id="hoverImg" src="assets/halden-hero.webp" alt="" width="1600" height="1000"></div>
   <p id="hoverLabel"></p>
 </div>
 
 <dialog class="dialog" id="projectDialog" aria-labelledby="dlgTitle">
   <div class="dialog-inner">
     <button class="dlg-close" id="dlgClose" type="button"><span aria-hidden="true">×</span><span class="sr">Close project</span></button>
-    <div class="plate p1" id="dlgPlate" aria-hidden="true"></div>
+    <div class="plate" id="dlgPlate" aria-hidden="true"><img id="dlgImg" src="assets/halden-voise.webp" alt="" width="1600" height="1000"></div>
     <p class="eyebrow" id="dlgMeta"></p>
     <h2 id="dlgTitle"></h2>
     <p class="dlg-copy" id="dlgCopy"></p>
     <dl class="dlg-facts" id="dlgFacts"></dl>
-    <p class="dlg-foot">Sample project sheet — drawings are illustrative, not built work.</p>
+    <p class="dlg-foot">Sample project sheet — photography is reference imagery, not built work.</p>
   </div>
 </dialog>
 
